@@ -1,4 +1,4 @@
-var actual      = require("./node/actual"),
+var actual      = require("./actual"),
     TelegramBot = require('node-telegram-bot-api'),
     token       = '242894983:AAFE8XZQhBSFtQV8OEDPGY4HV_W6WZBDWz4',
     botOptions  = {

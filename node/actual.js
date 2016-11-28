@@ -53,7 +53,7 @@ function getActual(callback, botId){
             if(index !== requestArray.length) return;
 
             if(botId){
-                callback(botId, responseArray);
+                callback(botId, JSON.stringify(responseArray));
             }else{
                 if(callback) callback(0, responseArray);
             }

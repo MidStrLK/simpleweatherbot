@@ -1,6 +1,7 @@
 var server 			= require("./node/server"),
 	router 			= require("./node/router"),
 	requestHandlers = require("./node/requestHandlers"),
+    telegrambot 	= require("./node/telegrambot"),
 	handle 			= {};
 
 handle["/"]                 = requestHandlers.submitRequest;    // index.html
@@ -16,3 +17,5 @@ handle["/getactual"]        = requestHandlers.submitRequest;    // Почасо�
 handle["/getforecast"]      = requestHandlers.submitRequest;    // Почасовой прогноз
 
 server.start(router.route, handle);
+
+telegrambot.start();

@@ -64,9 +64,9 @@ function getHourly(callback, botId){
             var endResult = getEndResult(responseArray);
 
             if(botId){
-                callback(botId, prepareForBot(responseArray));
+                callback(botId, prepareForBot(endResult));
             }else{
-                if(callback) callback(0, responseArray);
+                if(callback) callback(0, endResult);
             }
     };
 
@@ -85,7 +85,7 @@ function prepareForBot(data){
         if(val.name) res += val.name + '\n';
 
         for(var i=hour; i< 24; i++){
-            if(val[i] && val[i].text && val[i].temp){
+            if(val[i] && (val[i].text || val[i].temp)){
                 res += i + ':00 ' + val[i].temp + ', ' + val[i].text + '\n';
             }
         }
@@ -199,28 +199,27 @@ function findParameter($, values, callback){
     }
 
     for(var key in result) {
-        var time;
+        var time = false;
         if(result[key].time){
             time = result[key].time;
 
             if(time.indexOf(':') !== -1) time = time.split(':')[0];
-            if(time === 'утром') time = 9;
-            if(time === 'днём' || time === 'днем') time = 12;
+            if(time === 'утром')   time = 9;
+            if(time === 'днём' ||  time === 'днем') time = 12;
             if(time === 'вечером') time = 18;
-            if(time === 'ночью') time = 21;
+            if(time === 'ночью')   time = 21;
 
 
         }else if(!isNaN(values.firstNumber)){
             time = parseInt(values.firstNumber) + parseInt(key);
         }
 
-        res[time] = {
-            temp: result[key].temp || '',
-            text: result[key].text || ''
-        };
-
-        //res[time] = '<span class="hourly_temp">' + (result[key].temp || '') + '</span></br><span class="hourly_text">' + (result[key].text || '') + '</span>';
-
+        if(time) {
+            res[time] = {
+                temp: result[key].temp || '',
+                text: result[key].text || ''
+            }
+        }
     }
 
     res.name = values.name;

@@ -53,7 +53,7 @@ function getActual(callback, botId){
             if(index !== requestArray.length) return;
 
             if(botId){
-                callback(botId, JSON.stringify(responseArray));
+                callback(botId, prepareForBot(responseArray));
             }else{
                 if(callback) callback(0, responseArray);
             }
@@ -64,6 +64,17 @@ function getActual(callback, botId){
     });
 }
 
+/* Переводит текст для бота */
+function prepareForBot(data){
+    if(!data || !(data instanceof Array)) return false;
+
+    var res = '';
+    data.forEach(function(val){
+        res += val.name + ': ' + val.temp + ', ' + val.text + '\n';
+    });
+
+    return res;
+}
 
 /* Запрос данных с сайта */
 function submitRequest(values, callback){

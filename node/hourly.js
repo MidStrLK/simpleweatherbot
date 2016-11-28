@@ -91,6 +91,8 @@ function prepareForBot(data){
 
         res += ' \n';
     });
+    console.info('HOURLY prepareForBot - ',res);
+    return res;
 }
 
 function calcAccuHourly(data){

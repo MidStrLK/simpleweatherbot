@@ -9,7 +9,7 @@ exports.getActual = getActual;
 
 
 /* Запрашивает почасовой прогноз и отправляет обратно */
-function getActual(callback){
+function getActual(callback, botId){
     if(!manifest || !manifest.list) return;
 
     var requestArray = [];
@@ -52,7 +52,11 @@ function getActual(callback){
 
             if(index !== requestArray.length) return;
 
-            if(callback) callback(0, responseArray);
+            if(botId){
+                callback(botId, responseArray);
+            }else{
+                if(callback) callback(0, responseArray);
+            }
     };
 
     requestArray.forEach(function(val){

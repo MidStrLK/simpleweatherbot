@@ -1,6 +1,7 @@
-var TelegramBot = require('node-telegram-bot-api'),
-    token = '242894983:AAFE8XZQhBSFtQV8OEDPGY4HV_W6WZBDWz4',
-    botOptions = {
+var actual      = require("./node/actual"),
+    TelegramBot = require('node-telegram-bot-api'),
+    token       = '242894983:AAFE8XZQhBSFtQV8OEDPGY4HV_W6WZBDWz4',
+    botOptions  = {
         polling: true
     };
 
@@ -20,8 +21,9 @@ function start() {
         var messageDate = msg.date;
         var messageUsr = msg.from.username;
 
-        if (messageText === '/say') {
-            sendMessageByBot(messageChatId, 'Hello World!');
+        if (messageText === '/a') {
+            actual.getActual(sendMessageByBot, messageChatId);
+            //sendMessageByBot(messageChatId, 'Hello World!');
         }
         console.log(msg);
     });

@@ -1,4 +1,5 @@
 var actual      = require("./actual"),
+    hourly      = require("./hourly"),
     TelegramBot = require('node-telegram-bot-api'),
     token       = '242894983:AAFE8XZQhBSFtQV8OEDPGY4HV_W6WZBDWz4',
     botOptions  = {
@@ -21,11 +22,11 @@ function start() {
         var messageDate = msg.date;
         var messageUsr = msg.from.username;
 
-        if (messageText === '/a') {
+        if (messageText === '/now') {
             actual.getActual(sendMessageByBot, messageChatId);
-            //sendMessageByBot(messageChatId, 'Hello World!');
+        }else if (messageText === '/day') {
+            actual.getHourly(sendMessageByBot, messageChatId);
         }
-        console.log(msg);
     });
 
 

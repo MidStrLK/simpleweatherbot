@@ -9,7 +9,7 @@ exports.getHourly = getHourly;
 
 
 /* Запрашивает почасовой прогноз и отправляет обратно */
-function getHourly(callback){
+function getHourly(callback, botId){
     if(!manifest || !manifest.list) return;
 
     var requestArray = [];
@@ -63,11 +63,33 @@ function getHourly(callback){
 
             var endResult = getEndResult(responseArray);
 
-            if(callback) callback(0, endResult);
+            if(botId){
+                callback(botId, prepareForBot(responseArray));
+            }else{
+                if(callback) callback(0, responseArray);
+            }
     };
 
     requestArray.forEach(function(val){
         submitRequest(val, func);
+    });
+}
+
+function prepareForBot(data){
+    if(!data || !data.forEach) return;
+
+    var hour = (new Date()).getHours(),
+        res = '';
+    data.forEach(function(val){
+        if(val.name) res += val.name + '\n';
+
+        for(var i=hour; i< 24; i++){
+            if(val[i] && val[i].text && val[i].temp){
+                res += val[i].temp + ', ' + val[i].text + '\n';
+            }
+        }
+
+        res += ' \n';
     });
 }
 

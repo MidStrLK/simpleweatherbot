@@ -81,17 +81,18 @@ function prepareForBot(data){
     var hour = (new Date()).getHours(),
         res = '';
     data.forEach(function(val){
+
         if(val.name) res += val.name + '\n';
 
         for(var i=hour; i< 24; i++){
             if(val[i] && val[i].text && val[i].temp){
-                res += val[i].temp + ', ' + val[i].text + '\n';
+                res += i + ':00 ' + val[i].temp + ', ' + val[i].text + '\n';
             }
         }
 
         res += ' \n';
     });
-    console.info('HOURLY prepareForBot - ',res);
+
     return res;
 }
 

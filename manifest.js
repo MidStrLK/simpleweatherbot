@@ -14,7 +14,8 @@ exports.list = [
         hourly:[{
             url: 'https://pogoda.yandex.ru/moscow/details',
             text: '.forecast-detailed__day-info_first .weather-table__body-cell_type_condition .weather-table__value',
-            temp: '.forecast-detailed__day-info_first .weather-table__temp',
+            temp: '.forecast-detailed__day-info.forecast-detailed__day-info_first table td.weather-table__body-cell.weather-table__body-cell_type_daypart > div.weather-table__temp',
+            //temp: '.forecast-detailed__day-info_first .weather-table__temp',
             time: '.forecast-detailed__day-info_first .weather-table__daypart'
         }]
 	},

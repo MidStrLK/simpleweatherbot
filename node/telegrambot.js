@@ -25,7 +25,7 @@ function start() {
         if (messageText === '/now') {
             actual.getActual(sendMessageByBot, messageChatId);
         }else if (messageText === '/day') {
-            actual.getHourly(sendMessageByBot, messageChatId);
+            hourly.getHourly(sendMessageByBot, messageChatId);
         }
     });
 

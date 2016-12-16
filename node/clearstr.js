@@ -2,7 +2,7 @@ function clearTemp(text){
     text = String(text);
     if(!text || !text.replace || !text.charAt) return;
 
-    text = text.replace(/\s/, '').replace(/−/, '-');
+    text = text.replace(/\s/g, '').replace(/−/g, '-');
     if(text.charAt(0) !== '-' && text.charAt(0) !== '+') text = '+' + text;
     if(text.charAt(text.length-1) === 'C' && text.charAt(text.length-2) !== '°') text = text.substr(0, text.length-2) + '°C';
     if(text.charAt(text.length-1) === '°') text += 'C';

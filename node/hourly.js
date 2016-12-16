@@ -9,7 +9,7 @@ exports.getHourly = getHourly;
 
 
 /* Запрашивает почасовой прогноз и отправляет обратно */
-function getHourly(callback, botId){
+function getHourly(callback, botId, type){
     if(!manifest || !manifest.list) return;
 
     var requestArray = [];
@@ -64,7 +64,7 @@ function getHourly(callback, botId){
             var endResult = getEndResult(responseArray);
 
             if(botId){
-                callback(botId, prepareForBot(endResult));
+                callback(botId, prepareForBot(endResult, type));
             }else{
                 if(callback) callback(0, endResult);
             }
@@ -75,23 +75,43 @@ function getHourly(callback, botId){
     });
 }
 
-function prepareForBot(data){
+function prepareForBot(data, type){
     if(!data || !data.forEach) return;
 
     var hour = (new Date()).getHours(),
-        res = '';
+        res = '',
+        forhour = [],
+        i = null;
+
     data.forEach(function(val){
 
-        if(val.name) res += val.name + '\n';
+        if(type === 'forhour'){
+            for(i=hour; i< 24; i++){
+                if(!forhour[i]) forhour[i] = [];
 
-        for(var i=hour; i< 24; i++){
-            if(val[i] && (val[i].text || val[i].temp)){
-                res += i + ':00 ' + val[i].temp + ', ' + val[i].text + '\n';
+                if(val[i].temp || val[i].text) forhour[i].push(val.name + ': ' + (val[i].temp || '') + ', ' + (val[i].text || '') + '\n');
             }
+        }else{
+            if(val.name) res += val.name + '\n';
+
+            for(i=hour; i< 24; i++){
+                if(val[i] && (val[i].text || val[i].temp)){
+                    res += i + ':00 ' + val[i].temp + ', ' + val[i].text + '\n';
+                }
+            }
+
+            res += ' \n';
         }
 
-        res += ' \n';
     });
+
+    if(type === 'forhour'){
+        forhour.forEach(function(val, key){
+            if(val){
+                res += ((key < 10) ? '0' : '') + key + ':00 \n' + val.join('') + '\n';
+            }
+        })
+    }
 
     return res;
 }

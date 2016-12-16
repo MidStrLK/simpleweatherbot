@@ -1,7 +1,8 @@
 var fs          = require("fs"),
     index       = fs['readFileSync']('./index.html'),
     hourly      = require("./hourly"),
-    actual      = require("./actual");
+    actual      = require("./actual"),
+    forecast    = require("./forecast");
 
 function submitRequest(response, handle, pathname, postData){
 
@@ -36,6 +37,8 @@ function submitRequest(response, handle, pathname, postData){
           actual.getActual(func);
       }else if (pathname === '/gethourly') {
           hourly.getHourly(func);
+      }else if (pathname === '/getforecast') {
+          forecast.getForecast(func);
       } else {
           response.writeHead(500, {'Content-Type': 'application/json', 'charset': 'utf-8'});
           response.write('Ошибка в запросе к БД ' + path);

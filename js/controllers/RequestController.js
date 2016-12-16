@@ -27,5 +27,42 @@ myApp.controller('RequestController',
         /*---ПОЧАСОВОЙ---*/
 
 
+        /*----ПРОГНОЗ----*/
+        $scope.forecastDate = [' '];
+
+        var date = new Date(),
+            formatDate = function(increment){
+                var incDate = new Date(),
+                    month = incDate.getMonth() + 1;
+                incDate.setDate(date.getDate() + increment);
+                if(month < 10) month = '0' + String(month);
+                return incDate.getDate() + '.' + month + ', ' + ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"][incDate.getDay()];
+            };
+
+        var holyday = {};
+        for(var k=0;k<11;k++){
+            var formDay = formatDate(k);
+            $scope.forecastDate.push(formDay);
+            if(formDay.indexOf("Вс") !== -1 || formDay.indexOf("Сб") !== -1) holyday[k] = true;
+        }
+
+        console.info('holyday - ',holyday);
+
+        $http.get('/getforecast').success(function(data) {
+
+            if(data && data instanceof Object){
+                for(var key in data){
+                    if(data[key] && data[key] instanceof Object){
+                        for(var twokey in data[key]){
+                            data[key][twokey].holyday = (holyday[twokey]) ? 'class-holyday' : 'class-workday';
+                        }
+                    }
+                }
+            }
+
+            $scope.forecast = data;
+        });
+        /*----ПРОГНОЗ----*/
+
     }
 );

@@ -27,7 +27,7 @@ function getForecast(callback, botId){
             if(botId){
                 callback(botId, prepareForBot(responseArray));
             }else{
-                if(callback) callback(0, prepareForBot(responseArray));
+                if(callback) callback(0, manageForSite(responseArray));
             }
 
         };

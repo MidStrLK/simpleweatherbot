@@ -2,7 +2,7 @@ myApp.controller('RequestController',
     function QuestionController($scope, $http) {
 
         /*---АКТУАЛЬНЫЙ---*/
-        $http.get('/getactual').success(function (data) {
+        $http.get('/api/getactual').success(function (data) {
             $scope.actual = data;
         });
         /*---АКТУАЛЬНЫЙ---*/
@@ -10,7 +10,7 @@ myApp.controller('RequestController',
         /*---ПОЧАСОВОЙ---*/
         var nowHour = (new Date()).getHours(),
             newHourly = {};
-        $http.get('/gethourly').success(function(data) {
+        $http.get('/api/gethourly').success(function(data) {
             data.forEach(function(val, key){
                 if(!newHourly[key]) newHourly[key] = {};
                 for(var Okey in val){
@@ -48,7 +48,7 @@ myApp.controller('RequestController',
 
         console.info('holyday - ',holyday);
 
-        $http.get('/getforecast').success(function(data) {
+        $http.get('/api/getforecast').success(function(data) {
 
             if(data && data instanceof Object){
                 for(var key in data){

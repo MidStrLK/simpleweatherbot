@@ -33,11 +33,11 @@ function submitRequest(response, handle, pathname, postData){
             response.end();
           };
 
-      if (pathname === '/getactual') {
+      if (pathname === '/api/getactual') {
           actual.getActual(func);
-      }else if (pathname === '/gethourly') {
+      }else if (pathname === '/api/gethourly') {
           hourly.getHourly(func);
-      }else if (pathname === '/getforecast') {
+      }else if (pathname === '/api/getforecast') {
           forecast.getForecast(func);
       } else {
           response.writeHead(500, {'Content-Type': 'application/json', 'charset': 'utf-8'});

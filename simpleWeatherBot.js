@@ -5,16 +5,16 @@ var server 			= require("./node/server"),
 	handle 			= {};
 
 handle["/"]                 = requestHandlers.submitRequest;    // index.html
-handle["/remove"]           = requestHandlers.submitRequest;    // очистить БД
-handle["/insert"]           = requestHandlers.submitRequest;    // Посчитать погоду и положить в БД
-handle["/select"]           = requestHandlers.submitRequest;    // Получить погоду на сегодня
-handle["/count"]            = requestHandlers.submitRequest;    // Тест БД
-handle["/testCalculate"]    = requestHandlers.submitRequest;    // Тест БД
-handle["/mongorequest"]     = requestHandlers.submitRequest;    // Тест БД
+handle["/api/remove"]           = requestHandlers.submitRequest;    // очистить БД
+handle["/api/insert"]           = requestHandlers.submitRequest;    // Посчитать погоду и положить в БД
+handle["/api/select"]           = requestHandlers.submitRequest;    // Получить погоду на сегодня
+handle["/api/count"]            = requestHandlers.submitRequest;    // Тест БД
+handle["/api/testCalculate"]    = requestHandlers.submitRequest;    // Тест БД
+handle["/api/mongorequest"]     = requestHandlers.submitRequest;    // Тест БД
 
-handle["/gethourly"]        = requestHandlers.submitRequest;    // Почасовой прогноз
-handle["/getactual"]        = requestHandlers.submitRequest;    // Почасовой прогноз
-handle["/getforecast"]      = requestHandlers.submitRequest;    // Почасовой прогноз
+handle["/api/gethourly"]        = requestHandlers.submitRequest;    // Почасовой прогноз
+handle["/api/getactual"]        = requestHandlers.submitRequest;    // Почасовой прогноз
+handle["/api/getforecast"]      = requestHandlers.submitRequest;    // Почасовой прогноз
 
 server.start(router.route, handle);
 

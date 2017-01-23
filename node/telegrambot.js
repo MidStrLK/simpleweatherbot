@@ -53,9 +53,24 @@ function start() {
         }*/
     });
 
+    function getKeyboard(){
+        return  {
+            "parse_mode": "Markdown",
+            "reply_markup": {
+                "ReplyKeyboardMarkup": {
+                    "keyboard": [
+                        ['/now'],
+                        ['/day'],
+                        ['/hour'],
+                        ['/week']
+                    ]
+                }
+            }
+        };
+    }
 
     function sendMessageByBot(aChatId, aMessage) {
-        bot['sendMessage'](aChatId, aMessage, {caption: 'I\'m a cute bot!'});
+        bot['sendMessage'](aChatId, aMessage, getKeyboard());
     }
 
 }

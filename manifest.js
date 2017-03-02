@@ -28,13 +28,14 @@ exports.list = [
 		params: {
 			 now_text: 'body > section.content > div > div > div.right_col_1 div > div.wn_body > div.info_item.clearfix > div.ii._ic > div > span'
 			,now_temp: 'body > section.content > div > div > div.right_col_1 div > div.wn_body > div.info_item.clearfix > div.ii._temp > div > span'
-			,day_text: 'body > section.content > div > div > div.main > div.__frame_sm > div > div div.twoweeksline > div.twoweeks_col.twoweeks_desc'
-			,day_temp: '.twoweeks_minmax_temp span'
+			,day_text: 'body > section.content > div > div div.forecast_wrap.horizontal > div > div._line.iconline.clearfix > div span'
+			//,day_text: 'body > section.content > div > div > div.main > div.__frame_sm > div > div div.twoweeksline > div.twoweeks_col.twoweeks_desc'
+			,day_temp: '.weather_item.js_temp_graph' //'.twoweeks_minmax_temp span'
 		},
         hourly:[{
             url: 'https://www.gismeteo.ru/weather-moscow-4368/',
             text: 'section.content > div > div > div.main > div.__frame_sm > div.forecast_frame.hw_wrap.one_day > div  div._line.iconline.clearfix span',
-            temp: 'section.content > div > div > div.main > div.__frame_sm > div.forecast_frame.hw_wrap.one_day > div div._line.templine.clearfix > div div > span',
+            temp: '.weather_item.js_temp_graph',//'section.content > div > div > div.main > div.__frame_sm > div.forecast_frame.hw_wrap.one_day > div div._line.templine.clearfix > div div > span',
             time: 'section.content > div > div > div.main > div.__frame_sm > div.forecast_frame.hw_wrap.one_day > div > div div._line.timeline.clearfix div > span'
         }]
 	},

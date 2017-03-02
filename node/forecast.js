@@ -92,18 +92,33 @@ function findParameter($, tag, key, name, firstNumber, periodic, callback){
     var intArr = [],
         resArr = [],
         daynum = firstNumber || 0;
-
+    
     if(!$(tag)) return;
 
     $(tag).each(function() {
         var link = $(this);
         var text = link.text().replace(/<span>.*<\/span>/g,'').replace('Мин', '');
-        text = (key.indexOf('temp') !== -1) ? parseInt(text.replace(/'/g, '').replace(/"/g, '').replace(/−/g, '-')) : text;
-        intArr.push(text);
+
+        /* Для Гисметео, которые вставляют температуру в атрибут */
+        if(!text && link.attr && (link.attr('data-max') || link.attr('data-min'))){
+            if(link.attr('data-min')) {
+                //text += link.attr('data-min');
+                intArr.push(link.attr('data-min'));
+            }
+
+            if(link.attr('data-max')) {
+                //text = link.attr('data-max');
+                intArr.push(link.attr('data-max'));
+            }
+
+        }else{
+            text = (key.indexOf('temp') !== -1) ? parseInt(text.replace(/'/g, '').replace(/"/g, '').replace(/−/g, '-')) : text;
+            intArr.push(text);
+        }
+
+
 
     });
-
-
 
     intArr['forEach'](function (val, num) {
 

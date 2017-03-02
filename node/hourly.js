@@ -195,6 +195,10 @@ function findParameter($, values, callback){
         $(values.temp).each(function(key) {
             var link = $(this);
             var text = link.text();
+
+            /* Для Гисметео, которые вставляют температуру в атрибут */
+            if(!text && link.attr && link.attr('data-value')) text = link.attr('data-value');
+
             if(!result[key]) result[key] = {};
             result[key]['temp'] = clearstr.clearTemp(text);
         });

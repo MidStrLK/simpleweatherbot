@@ -70,7 +70,7 @@ function start() {
     }
 
     function sendMessageByBot(aChatId, aMessage) {
-        bot['sendMessage'](aChatId, aMessage, getKeyboard());
+        bot['sendMessage'](aChatId, aMessage/*, getKeyboard()*/);
     }
 
 }

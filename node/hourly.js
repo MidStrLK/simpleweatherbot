@@ -12,9 +12,9 @@ exports.getHourly = getHourly;
 function getHourly(callback, botId, type){
     if(!manifest || !manifest.list) return;
 
-    var requestArray = [];
+    var requestArray = getRequestArray();
 
-    for(var key in manifest.list) {
+    /*for(var key in manifest.list) {
         if(manifest.list[key].hourly && manifest.list[key].hourly instanceof Array) {
             var valHourly = manifest.list[key].hourly;
 
@@ -26,7 +26,7 @@ function getHourly(callback, botId, type){
 
             requestArray = requestArray.concat(valHourly)
         }
-    }
+    }*/
 
     var responseArray = [],
         index = 0,
@@ -73,6 +73,24 @@ function getHourly(callback, botId, type){
     requestArray.forEach(function(val){
         submitRequest(val, func);
     });
+}
+
+function getRequestArray(){
+    var res = [];
+
+    for(var key in manifest.list) {
+        if(manifest.list[key].hourly) {
+            var params = manifest.list[key].hourly;
+
+            params.name = manifest.list[key].name;
+
+            if(manifest.list[key].name === 'accuweather') params = calcAccuHourly(params);
+
+            res = res.concat(params)
+        }
+    }
+
+    return res;
 }
 
 function prepareForBot(data, type){
@@ -126,9 +144,9 @@ function calcAccuHourly(data){
     while(nowTime < 24){
 
         res.push({
-            url: data[0].url + nowTime,
-            text: data[0].text,
-            temp: data[0].temp,
+            url: data.url + nowTime,
+            text: data.text,
+            temp: data.temp,
             firstNumber: nowTime,
             name: 'accuweather'
         });
@@ -136,8 +154,6 @@ function calcAccuHourly(data){
         i += 8;
         nowTime += 8;
     }
-
-    console.info('res - ',res);
 
     return res;
 }
@@ -208,6 +224,10 @@ function findParameter($, values, callback){
         $(values.text).each(function(key) {
             var link = $(this);
             var text = link.text();
+
+            /* Для Гисметео, которые вставляют температуру в атрибут */
+            if(!text && link.attr && link.attr('data-text')) text = link.attr('data-text');
+
             if(!result[key]) result[key] = {};
             result[key]['text'] = clearstr.translate(text);
         });

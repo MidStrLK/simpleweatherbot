@@ -12,9 +12,9 @@ exports.getActual = getActual;
 function getActual(callback, botId){
     if(!manifest || !manifest.list) return;
 
-    var requestArray = [];
+    var requestArray = getRequestArray();
 
-    for(var key in manifest.list) {
+    /*for(var key in manifest.list) {
         if (!manifest.list[key].params) return;
 
         var item = {};
@@ -42,7 +42,7 @@ function getActual(callback, botId){
         }
 
         requestArray.push(item)
-    }
+    }*/
 
     var responseArray = [],
         index = 0,
@@ -62,6 +62,25 @@ function getActual(callback, botId){
     requestArray.forEach(function(val){
         submitRequest(val, func);
     });
+}
+
+function getRequestArray(){
+    var res = [];
+
+    for(var key in manifest.list) {
+        if (manifest.list[key].actual){
+            var params = manifest.list[key].actual;
+            console.info('params - ',params);
+            res.push({
+                url:  params.url,
+                name: manifest.list[key].name,
+                temp: params.temp,
+                text: params.text
+            })
+        }
+    }
+
+    return res;
 }
 
 /* Переводит текст для бота */
@@ -88,7 +107,6 @@ function submitRequest(values, callback){
         findParameter($, values, callback);
     });
 }
-
 
 /* Ищет параметры для каждого случая */
 function findParameter($, values, callback){

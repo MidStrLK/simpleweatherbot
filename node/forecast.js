@@ -58,7 +58,7 @@ function getRequestData(data){
             name: name,
             periodic: periodic
         });
-    }else if(params['forEach']){
+    }else if(params && params['forEach']){
         params['forEach'](function(Pval){
             res.push({
                 url:Pval.url,
@@ -92,7 +92,7 @@ function findParameter($, tag, key, name, firstNumber, periodic, callback){
     var intArr = [],
         resArr = [],
         daynum = firstNumber || 0;
-    
+
     if(!$(tag)) return;
 
     $(tag).each(function() {
@@ -113,6 +113,10 @@ function findParameter($, tag, key, name, firstNumber, periodic, callback){
 
         }else{
             text = (key.indexOf('temp') !== -1) ? parseInt(text.replace(/'/g, '').replace(/"/g, '').replace(/−/g, '-')) : text;
+
+            /* Для Гисметео, которые вставляют температуру в атрибут */
+            if(!text && link.attr && link.attr('data-text')) text = link.attr('data-text');
+
             intArr.push(text);
         }
 
@@ -125,7 +129,7 @@ function findParameter($, tag, key, name, firstNumber, periodic, callback){
         if(periodic && periodic === 'odd' && (key.indexOf('day') !== -1) && num%2 === 0) return;
 
         if(periodic && periodic === 'double' && key === 'day_temp' && num%2 !== 0){
-            resArr[resArr.length-1].value += '...' + val;
+            resArr[resArr.length-1].value = val + '...' + resArr[resArr.length-1].value;
         }else{
             resArr.push({
                 name: name,
@@ -140,7 +144,6 @@ function findParameter($, tag, key, name, firstNumber, periodic, callback){
 
 
     });
-
 
     callback(resArr);
 }

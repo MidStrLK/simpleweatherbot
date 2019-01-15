@@ -19,9 +19,6 @@ function start() {
     });
 
     bot.on('text', function (msg) {
-
-        console.info('msg - ',msg);
-
         var messageChatId = msg['chat'].id;
         var messageText = msg.text;
         var messageDate = msg.date;

@@ -1,3 +1,23 @@
+exports.actual = [{
+        name: 'yandex',
+        url:    'http://yandex.ru/pogoda/moscow',
+        text:   'div.content__main > div.content__row > div.fact > div.fact__condition.day-anchor.i-bem',
+        temp:   'div.content__main > div.content__row > div.fact > a.link.fact__basic > div > span.temp__value'
+    }, {
+        name: 'gismeteo',
+        url: 'https://www.gismeteo.ru/weather-moscow-4368/now/',
+        text: 'body > section.content > div > div > div.main > div.__frame_sm > div.forecast_frame.forecast_now > div.forecast_wrap.horizontal > div > div.now__desc > span',
+        temp: 'body > section.content > div > div > div.main > div.__frame_sm > div.forecast_frame.forecast_now > div.tabs._left > div > div > div.tab-content > div.tab-weather > div.js_meas_container.temperature.tab-weather__value > span'
+}];
+
+exports.hourly = [{
+        name: 'yandex',
+        url: 'https://yandex.ru/pogoda/moscow/details',
+        text: '.forecast-details__day-info table tr > td.weather-table__body-cell.weather-table__body-cell_type_condition',
+        temp: '.forecast-details table tr > td.weather-table__body-cell.weather-table__body-cell_type_feels-like > div > .temp__value',
+        time: 'dayTime'
+}];
+
 exports.list = [
 	/* YANDEX */
 	{
@@ -5,8 +25,8 @@ exports.list = [
 		url: "http://yandex.ru/pogoda/moscow",
         actual: {
             url:    'http://yandex.ru/pogoda/moscow',
-            text:   '.current-weather__comment',
-            temp:   '.current-weather__thermometer.current-weather__thermometer_type_now'
+            text:   'div.content__main > div.content__row > div.fact > div.fact__condition.day-anchor.i-bem',
+            temp:   'div.content__main > div.content__row > div.fact > a.link.fact__basic > div > span.temp__value'
         },
 		params: {
 			 now_text: '.current-weather__comment'

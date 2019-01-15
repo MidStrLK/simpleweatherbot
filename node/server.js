@@ -12,7 +12,6 @@ function start(route, handle) {
   function onRequest(request, response) {
       var postData = "";
       var pathname = url.parse(request.url).pathname;
-      console.log(formatDate.dateToLocal() + "--" + pathname);
 
       request['setEncoding']("utf8");
 

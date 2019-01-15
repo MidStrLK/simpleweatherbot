@@ -2,7 +2,9 @@ var fs          = require("fs"),
     index       = fs['readFileSync']('./index.html'),
     hourly      = require("./hourly"),
     actual      = require("./actual"),
-    forecast    = require("./forecast");
+    forecast    = require("./forecast"),
+    weather     = require("./weather");
+
 
 function submitRequest(response, handle, pathname, postData){
 
@@ -34,11 +36,14 @@ function submitRequest(response, handle, pathname, postData){
           };
 
       if (pathname === '/api/getactual') {
-          actual.getActual(func);
+          //actual.getActual(func);
+          weather(func, 'actual');
       }else if (pathname === '/api/gethourly') {
-          hourly.getHourly(func);
+          //hourly.getHourly(func);
+          weather(func, 'hourly');
       }else if (pathname === '/api/getforecast') {
-          forecast.getForecast(func);
+          //forecast.getForecast(func);
+          weather(func, 'forecast');
       } else {
           response.writeHead(500, {'Content-Type': 'application/json', 'charset': 'utf-8'});
           response.write('Ошибка в запросе к БД ' + path);

@@ -17,7 +17,10 @@ myApp.controller('RequestController',
                     if(parseInt(Okey) >= nowHour || Okey === 'name') newHourly[key][Okey] = val[Okey];
                 }
             });
-            $scope.hourly = newHourly;
+
+            //$scope.hourly = newHourly;
+
+            $scope.hourly = data;
         });
 
         $scope.hourlyTime = [' '];

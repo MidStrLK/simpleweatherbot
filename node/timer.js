@@ -1,4 +1,4 @@
-var weather    = require("./weather"),
+var allweather    = require("./allweather"),
 	calculate  = require("./calculate"),
 	formatDate = require('../formatdate'),
     interval   = 5,
@@ -12,17 +12,13 @@ function start(COLLECTION){
 				hours   = date.getHours(),
 				minutes = date.getMinutes();
 
-		console.log('>>> ' + formatDate.dateToLocal(date) + ' <<<  (weather hours | calc day == ', lastWeather, hours, ' | ', lastCalc, day);
-
 			if(lastWeather !== hours) {
                 lastWeather = hours;
-				console.log('GETALLWEATHER attempt');
-                weather.getAllWeather(null, COLLECTION);
+                allweather.getAllWeather(null, COLLECTION);
             }
 
 			if(hours == 23 && lastCalc !== day) {
                 lastCalc = day;
-                console.log('CALCULATE attempt');
                 calculate.calc(null, COLLECTION);
             }
 		};

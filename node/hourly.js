@@ -77,16 +77,19 @@ function getHourly(callback, botId, type){
 
 function getRequestArray(){
     var res = [];
+    if(manifest.actual){
+        res = manifest.hourly;
+    }else {
+        for (var key in manifest.list) {
+            if (manifest.list[key].hourly) {
+                var params = manifest.list[key].hourly;
 
-    for(var key in manifest.list) {
-        if(manifest.list[key].hourly) {
-            var params = manifest.list[key].hourly;
+                params.name = manifest.list[key].name;
 
-            params.name = manifest.list[key].name;
+                if (manifest.list[key].name === 'accuweather') params = calcAccuHourly(params);
 
-            if(manifest.list[key].name === 'accuweather') params = calcAccuHourly(params);
-
-            res = res.concat(params)
+                res = res.concat(params)
+            }
         }
     }
 

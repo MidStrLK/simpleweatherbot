@@ -13,36 +13,7 @@ function getActual(callback, botId){
     if(!manifest || !manifest.list) return;
 
     var requestArray = getRequestArray();
-
-    /*for(var key in manifest.list) {
-        if (!manifest.list[key].params) return;
-
-        var item = {};
-
-        if (manifest.list[key].params instanceof Array) {
-            manifest.list[key].params.forEach(function (val) {
-                if (val.params && val.params.now_text && val.params.now_temp) {
-                    item = {
-                        url: val.url,
-                        name: manifest.list[key].name,
-                        temp: val.params.now_temp,
-                        text: val.params.now_text,
-                        img:  val.params.now_img
-                    };
-                }
-            })
-        } else {
-            item = {
-                url: manifest.list[key].url,
-                name: manifest.list[key].name,
-                temp: manifest.list[key].params.now_temp,
-                text: manifest.list[key].params.now_text,
-                img:  manifest.list[key].params.now_img
-            };
-        }
-
-        requestArray.push(item)
-    }*/
+    console.info('requestArray - ',requestArray);
 
     var responseArray = [],
         index = 0,
@@ -52,10 +23,10 @@ function getActual(callback, botId){
 
             if(index !== requestArray.length) return;
 
-            if(botId){
+            if(botId && callback){
                 callback(botId, prepareForBot(responseArray));
             }else{
-                if(callback) callback(0, responseArray);
+                callback(0, responseArray);
             }
     };
 
@@ -67,18 +38,23 @@ function getActual(callback, botId){
 function getRequestArray(){
     var res = [];
 
-    for(var key in manifest.list) {
-        if (manifest.list[key].actual){
-            var params = manifest.list[key].actual;
-            console.info('params - ',params);
-            res.push({
-                url:  params.url,
-                name: manifest.list[key].name,
-                temp: params.temp,
-                text: params.text
-            })
+    if(manifest.actual){
+        res = manifest.actual;
+    }else{
+        for(var key in manifest.list) {
+            if (manifest.list[key].actual){
+                var params = manifest.list[key].actual;
+                res.push({
+                    url:  params.url,
+                    name: manifest.list[key].name,
+                    temp: params.temp,
+                    text: params.text
+                })
+            }
         }
     }
+
+
 
     return res;
 }
@@ -130,15 +106,6 @@ function findParameter($, values, callback){
             result['text'] = link.text();
         });
     }
-
-    /*if(values.img && $(values.img) && $(values.img).each){
-        $(values.text).each(function(key) {
-            var link = $(this);
-            console.info('link - ',link.children());
-            result['img'] = link.attr('background-image');
-            console.info('img',result['img']);
-        });
-    }*/
 
     callback(result);
 }
